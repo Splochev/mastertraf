@@ -18,7 +18,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/95 backdrop-blur-sm">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8" aria-label="Основна навигация">
-        <Link href="/" className="flex items-center gap-2 text-xl font-bold tracking-tight text-neutral-900">
+        <Link href="/" className="flex items-center text-xl font-bold tracking-tight text-neutral-900">
           <span className="text-primary-500">MASTER</span>
           <span>TRAF</span>
         </Link>
