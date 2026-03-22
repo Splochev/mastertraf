@@ -4,6 +4,7 @@ import { getProducts, getProductBySlug } from "@/data/products";
 import { getCompanyInfo } from "@/data/company";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { ProductSchema } from "@/components/seo/StructuredData";
+import { ImageGallery } from "@/components/ui/ImageGallery";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -64,29 +65,30 @@ export default async function ProductPage({
 
         {/* Product Detail */}
         <div className="mt-8 grid gap-10 lg:grid-cols-2">
-          {/* Image */}
-          <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-100">
-            <div className="flex h-full items-center justify-center">
-              <svg className="h-24 w-24 text-neutral-300" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.41a2.25 2.25 0 013.182 0l2.909 2.91m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-              </svg>
-            </div>
-            {/* Badge */}
-            <span
-              className={`absolute right-4 top-4 rounded-full px-3 py-1 text-sm font-semibold ${
-                product.availability === "in-stock"
-                  ? "bg-green-100 text-green-800"
+          {/* Images */}
+          <div>
+            <div className="relative">
+              <ImageGallery
+                images={product.images.length > 0 ? product.images : product.image ? [product.image] : []}
+                alt={product.nameBg}
+              />
+              {/* Badge */}
+              <span
+                className={`absolute right-4 top-4 z-10 rounded-full px-3 py-1 text-sm font-semibold ${
+                  product.availability === "in-stock"
+                    ? "bg-green-100 text-green-800"
+                    : product.availability === "made-to-order"
+                      ? "bg-primary-100 text-primary-800"
+                      : "bg-neutral-100 text-neutral-700"
+                }`}
+              >
+                {product.availability === "in-stock"
+                  ? "В наличност"
                   : product.availability === "made-to-order"
-                    ? "bg-primary-100 text-primary-800"
-                    : "bg-neutral-100 text-neutral-700"
-              }`}
-            >
-              {product.availability === "in-stock"
-                ? "В наличност"
-                : product.availability === "made-to-order"
-                  ? "По поръчка"
-                  : "Свържете се"}
-            </span>
+                    ? "По поръчка"
+                    : "Свържете се"}
+              </span>
+            </div>
           </div>
 
           {/* Details */}
