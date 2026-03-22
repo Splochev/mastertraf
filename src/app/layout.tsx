@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { siteConfig } from "@/lib/config";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 // Revalidate all pages every hour (ISR)
@@ -94,14 +93,8 @@ export default function RootLayout({
   return (
     <html lang="bg" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="flex min-h-screen flex-col">
-        <a href="#main-content" className="skip-link">
-          Към основното съдържание
-        </a>
-        <Header />
-        <main id="main-content" className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        {children}
+        <Analytics />
       </body>
     </html>
   );
