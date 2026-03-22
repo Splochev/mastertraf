@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { companyInfo } from "@/data/company";
+import { getCompanyInfo } from "@/data/company";
 
-export function Footer() {
+export async function Footer() {
+  const companyInfo = await getCompanyInfo();
   const currentYear = new Date().getFullYear();
 
   return (

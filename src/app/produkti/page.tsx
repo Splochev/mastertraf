@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { products, categories } from "@/data/products";
+import { getProducts, getCategories } from "@/data/products";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { WebPageSchema } from "@/components/seo/StructuredData";
 import { ProductFilter } from "@/components/ui/ProductFilter";
@@ -11,7 +11,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/produkti" },
 };
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const [products, categories] = await Promise.all([
+    getProducts(),
+    getCategories(),
+  ]);
+
   return (
     <>
       <WebPageSchema

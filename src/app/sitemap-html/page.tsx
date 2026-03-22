@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { products, categories } from "@/data/products";
+import { getProducts, getCategories } from "@/data/products";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 
 export const metadata: Metadata = {
@@ -10,7 +10,12 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function HTMLSitemap() {
+export default async function HTMLSitemap() {
+  const [products, categories] = await Promise.all([
+    getProducts(),
+    getCategories(),
+  ]);
+
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
       <Breadcrumbs items={[{ label: "Карта на сайта" }]} />

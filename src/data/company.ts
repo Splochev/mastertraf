@@ -1,41 +1,57 @@
-export const companyInfo = {
-  name: "МАСТЕРТРАФ",
-  nameEn: "MASTERTRAF",
-  legalName: "Мастертраф ЕООД",
-  tagline: "Ремонт и изработка по поръчка на трансформатори и заваръчна техника",
-  taglineEn: "Repair and Custom Manufacturing of Transformers and Welding Equipment",
-  description:
-    "Ремонт на трансформатори и заваръчна техника. Проектиране и изработка по поръчка на специализирани трансформаторни машини и апарати.",
-  descriptionEn:
-    "Repair of transformers and welding equipment. Design and custom manufacturing of specialized transformer machines and devices.",
-  values: [
-    { bg: "Индивидуален подход", en: "Individual approach" },
-    { bg: "Честност", en: "Honesty" },
-    { bg: "Коректност", en: "Integrity" },
-    { bg: "Професионализъм", en: "Professionalism" },
-  ],
-  mission:
-    "Бързо и висококачествено обслужване на достъпни цени, дълготрайност и висока надеждност на изделията.",
-  missionEn:
-    "Fast and high-quality service at affordable prices, durability and high reliability of products.",
+import { cache } from "react";
+import { supabase } from "@/lib/supabase/data";
+
+export interface CompanyInfo {
+  name: string;
+  nameEn: string;
+  legalName: string;
+  tagline: string;
+  taglineEn: string;
+  description: string;
+  descriptionEn: string;
+  values: { bg: string; en: string }[];
+  mission: string;
+  missionEn: string;
   contact: {
-    address: "гр. София, ж.к. Овча купел, ул. \"Монтевидео\" 414, 1632 София",
-    addressEn: "Sofia, Ovcha Kupel, 414 Montevideo St., 1632 Sofia, Bulgaria",
-    phone: "+359 888 709 404",
-    email: "transformatori@abv.bg",
-    workingHours: "Понеделник – Петък: 9:00 – 18:00",
-    workingHoursEn: "Monday – Friday: 9:00 – 18:00",
-    weekends: "Събота и Неделя – почивни дни",
-    weekendsEn: "Saturday & Sunday – closed",
-  },
+    address: string;
+    addressEn: string;
+    phone: string;
+    email: string;
+    workingHours: string;
+    workingHoursEn: string;
+    weekends: string;
+    weekendsEn: string;
+  };
   social: {
-    facebook: [
-      "https://www.facebook.com/transformatormaster",
-      "https://www.facebook.com/mastertrafsofia",
-    ],
-    youtube: "https://www.youtube.com/channel/UC_55lL4DQ2qkFPTm7VKmuyw",
-  },
-  mapCoordinates: { lat: 42.68732721436239, lng: 23.252080076509856 },
-  domain: "mastertraf.net",
-  founded: "2010",
-} as const;
+    facebook: string[];
+    youtube: string;
+  };
+  mapCoordinates: { lat: number; lng: number };
+  domain: string;
+  founded: string;
+}
+
+export const getCompanyInfo = cache(async (): Promise<CompanyInfo> => {
+  const { data, error } = await supabase
+    .from("company_info")
+    .select("*")
+    .single();
+  if (error) throw error;
+  return {
+    name: data.name,
+    nameEn: data.name_en,
+    legalName: data.legal_name,
+    tagline: data.tagline,
+    taglineEn: data.tagline_en,
+    description: data.description,
+    descriptionEn: data.description_en,
+    values: data.values as { bg: string; en: string }[],
+    mission: data.mission,
+    missionEn: data.mission_en,
+    contact: data.contact as CompanyInfo["contact"],
+    social: data.social as CompanyInfo["social"],
+    mapCoordinates: { lat: data.map_lat, lng: data.map_lng },
+    domain: data.domain,
+    founded: data.founded,
+  };
+});

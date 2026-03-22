@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { companyInfo } from "@/data/company";
+import { getCompanyInfo } from "@/data/company";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { WebPageSchema } from "@/components/seo/StructuredData";
 import Link from "next/link";
@@ -11,7 +11,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/za-nas" },
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const companyInfo = await getCompanyInfo();
+
   return (
     <>
       <WebPageSchema

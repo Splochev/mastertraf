@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { products, getProductBySlug } from "@/data/products";
-import { companyInfo } from "@/data/company";
+import { getProducts, getProductBySlug } from "@/data/products";
+import { getCompanyInfo } from "@/data/company";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { ProductSchema } from "@/components/seo/StructuredData";
 import { notFound } from "next/navigation";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const products = await getProducts();
   return products.map((product) => ({ slug: product.slug }));
 }
 
@@ -16,7 +17,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) return {};
 
   return {
@@ -38,7 +39,11 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const [product, products, companyInfo] = await Promise.all([
+    getProductBySlug(slug),
+    getProducts(),
+    getCompanyInfo(),
+  ]);
   if (!product) notFound();
 
   const relatedProducts = products

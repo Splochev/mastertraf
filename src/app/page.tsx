@@ -1,14 +1,20 @@
 import Link from "next/link";
-import { products } from "@/data/products";
-import { services } from "@/data/services";
-import { faqItems } from "@/data/faq";
-import { companyInfo } from "@/data/company";
+import { getProducts } from "@/data/products";
+import { getServices } from "@/data/services";
+import { getFAQItems } from "@/data/faq";
+import { getCompanyInfo } from "@/data/company";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import { FAQSection } from "@/components/ui/FAQSection";
 import { OrganizationSchema, FAQSchema } from "@/components/seo/StructuredData";
 
-export default function Home() {
+export default async function Home() {
+  const [products, services, faqItems, companyInfo] = await Promise.all([
+    getProducts(),
+    getServices(),
+    getFAQItems(),
+    getCompanyInfo(),
+  ]);
   const featuredProducts = products.slice(0, 4);
   const featuredServices = services.slice(0, 6);
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { galleryItems, galleryCategories } from "@/data/gallery";
+import { getGalleryItems, getGalleryCategories } from "@/data/gallery";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { WebPageSchema } from "@/components/seo/StructuredData";
 import { GalleryFilter } from "@/components/ui/GalleryFilter";
@@ -11,7 +11,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/galeriya" },
 };
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const [galleryItems, galleryCategories] = await Promise.all([
+    getGalleryItems(),
+    getGalleryCategories(),
+  ]);
+
   return (
     <>
       <WebPageSchema

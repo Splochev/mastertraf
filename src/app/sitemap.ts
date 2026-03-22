@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
-import { products } from "@/data/products";
+import { getProducts } from "@/data/products";
 import { siteConfig } from "@/lib/config";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const products = await getProducts();
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: siteConfig.url,

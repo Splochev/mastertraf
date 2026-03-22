@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server";
 import { siteConfig } from "@/lib/config";
-import { products } from "@/data/products";
-import { services } from "@/data/services";
-import { companyInfo } from "@/data/company";
+import { getProducts } from "@/data/products";
+import { getServices } from "@/data/services";
+import { getCompanyInfo } from "@/data/company";
 
-export function GET() {
+export async function GET() {
+  const [products, services, companyInfo] = await Promise.all([
+    getProducts(),
+    getServices(),
+    getCompanyInfo(),
+  ]);
+
   const content = `# ${companyInfo.legalName}
 > ${companyInfo.tagline}
 

@@ -5,6 +5,9 @@ import { Footer } from "@/components/layout/Footer";
 import { siteConfig } from "@/lib/config";
 import "./globals.css";
 
+// Revalidate all pages every hour (ISR)
+export const revalidate = 3600;
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin", "latin-ext"],
@@ -37,6 +40,11 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "МАСТЕРТРАФ ЕООД" }],
   creator: "МАСТЕРТРАФ",
+  icons: {
+    icon: "/logo.ico",
+    shortcut: "/logo.ico",
+    apple: "/logo.ico",
+  },
   openGraph: {
     type: "website",
     locale: "bg_BG",

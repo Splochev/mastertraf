@@ -1,9 +1,10 @@
 import { siteConfig } from "@/lib/config";
-import { companyInfo } from "@/data/company";
+import { getCompanyInfo } from "@/data/company";
 import type { Product } from "@/data/products";
 import type { FAQItem } from "@/data/faq";
 
-export function OrganizationSchema() {
+export async function OrganizationSchema() {
+  const companyInfo = await getCompanyInfo();
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -48,7 +49,8 @@ export function OrganizationSchema() {
   );
 }
 
-export function ProductSchema({ product }: { product: Product }) {
+export async function ProductSchema({ product }: { product: Product }) {
+  const companyInfo = await getCompanyInfo();
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -120,7 +122,7 @@ export function FAQSchema({ items }: { items: FAQItem[] }) {
   );
 }
 
-export function WebPageSchema({
+export async function WebPageSchema({
   title,
   description,
   url,
@@ -129,6 +131,7 @@ export function WebPageSchema({
   description: string;
   url: string;
 }) {
+  const companyInfo = await getCompanyInfo();
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
