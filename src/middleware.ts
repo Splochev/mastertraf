@@ -4,20 +4,8 @@ import { NextResponse, type NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // For non-admin routes: clear any Supabase auth cookies (auto-logout)
+  // Non-admin routes: pass through without session refresh
   if (!pathname.startsWith("/admin")) {
-    const hasSbCookies = request.cookies
-      .getAll()
-      .some((c) => c.name.startsWith("sb-"));
-    if (hasSbCookies) {
-      const response = NextResponse.next({ request });
-      request.cookies.getAll().forEach((cookie) => {
-        if (cookie.name.startsWith("sb-")) {
-          response.cookies.delete(cookie.name);
-        }
-      });
-      return response;
-    }
     return NextResponse.next({ request });
   }
 
