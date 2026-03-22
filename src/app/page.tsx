@@ -146,48 +146,35 @@ export default async function Home() {
       {/* About Preview */}
       <section className="py-20 sm:py-24" aria-labelledby="about-heading">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            <div>
-              <span className="text-sm font-semibold uppercase tracking-wider text-primary-600">
-                За нас
-              </span>
-              <h2 id="about-heading" className="mt-2 text-3xl font-bold text-neutral-900 sm:text-4xl">
-                Семеен бизнес с традиции в заваръчната техника
-              </h2>
-              <p className="mt-4 text-lg leading-relaxed text-neutral-600">
-                {companyInfo.description} Нашата цел е {companyInfo.mission.toLowerCase()}
-              </p>
-              <div className="mt-6 grid grid-cols-2 gap-4">
-                {companyInfo.values.map((value) => (
-                  <div key={value.bg} className="flex items-center gap-2">
-                    <svg className="h-5 w-5 text-primary-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span className="text-sm font-medium text-neutral-700">{value.bg}</span>
-                  </div>
-                ))}
-              </div>
-              <Link
-                href="/za-nas"
-                className="mt-8 inline-flex items-center text-base font-semibold text-primary-600 hover:text-primary-700"
-              >
-                Научете повече за нас
-                <svg className="ml-1.5 h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </Link>
-            </div>
-            {/* Image placeholder */}
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-neutral-200">
-              <div className="flex h-full items-center justify-center">
-                <div className="text-center">
-                  <svg className="mx-auto h-20 w-20 text-neutral-400" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="text-sm font-semibold uppercase tracking-wider text-primary-600">
+              За нас
+            </span>
+            <h2 id="about-heading" className="mt-2 text-3xl font-bold text-neutral-900 sm:text-4xl">
+              Семеен бизнес с традиции в заваръчната техника
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-neutral-600">
+              {companyInfo.description} Нашата цел е {companyInfo.mission.toLowerCase()}
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              {companyInfo.values.map((value) => (
+                <div key={value.bg} className="flex items-center gap-2">
+                  <svg className="h-5 w-5 text-primary-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <p className="mt-2 text-neutral-500">Снимка на работилницата</p>
+                  <span className="text-sm font-medium text-neutral-700">{value.bg}</span>
                 </div>
-              </div>
+              ))}
             </div>
+            <Link
+              href="/za-nas"
+              className="mt-8 inline-flex items-center text-base font-semibold text-primary-600 hover:text-primary-700"
+            >
+              Научете повече за нас
+              <svg className="ml-1.5 h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
