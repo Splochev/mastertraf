@@ -239,29 +239,19 @@ function ProductForm({
         <Textarea label="Кратко описание (BG)" value={form.short_description_bg} onChange={(v) => set("short_description_bg", v)} />
         <Textarea label="Описание (EN)" value={form.description_en} onChange={(v) => set("description_en", v)} />
         <Textarea label="Описание (BG)" value={form.description_bg} onChange={(v) => set("description_bg", v)} />
-        <Textarea
-          label="Спецификации (JSON)"
-          value={JSON.stringify(form.specs, null, 2)}
-          onChange={(v) => {
-            try { set("specs", JSON.parse(v)); } catch { /* ignore */ }
-          }}
-        />
-        <Textarea
-          label="Функции EN (по 1 на ред)"
-          value={(form.features_en ?? []).join("\n")}
-          onChange={(v) => set("features_en", v.split("\n").filter(Boolean))}
-        />
-        <Textarea
-          label="Функции BG (по 1 на ред)"
-          value={(form.features_bg ?? []).join("\n")}
-          onChange={(v) => set("features_bg", v.split("\n").filter(Boolean))}
-        />
+        <div className="sm:col-span-2">
+          <SpecsEditor specs={form.specs ?? []} onChange={(v) => set("specs", v)} />
+        </div>
+        <div className="sm:col-span-2">
+          <ListEditor label="Функции (EN)" items={form.features_en ?? []} onChange={(v) => set("features_en", v)} />
+        </div>
+        <div className="sm:col-span-2">
+          <ListEditor label="Функции (BG)" items={form.features_bg ?? []} onChange={(v) => set("features_bg", v)} />
+        </div>
         <Input label="Основна снимка (URL)" value={form.image} onChange={(v) => set("image", v)} />
-        <Textarea
-          label="Снимки (URL, по 1 на ред)"
-          value={(form.images ?? []).join("\n")}
-          onChange={(v) => set("images", v.split("\n").filter(Boolean))}
-        />
+        <div className="sm:col-span-2">
+          <ListEditor label="Допълнителни снимки (URL)" items={form.images ?? []} onChange={(v) => set("images", v)} />
+        </div>
         <Input label="Цена" value={form.price ?? ""} onChange={(v) => set("price", v || null)} />
         <div>
           <label className="mb-1 block text-sm font-medium text-neutral-700">Наличност</label>
@@ -292,6 +282,92 @@ function ProductForm({
         >
           Отказ
         </button>
+      </div>
+    </div>
+  );
+}
+
+function SpecsEditor({
+  specs,
+  onChange,
+}: {
+  specs: { label: string; labelBg: string; value: string }[];
+  onChange: (v: { label: string; labelBg: string; value: string }[]) => void;
+}) {
+  const update = (i: number, field: string, val: string) => {
+    const next = specs.map((s, idx) => (idx === i ? { ...s, [field]: val } : s));
+    onChange(next);
+  };
+  const add = () => onChange([...specs, { label: "", labelBg: "", value: "" }]);
+  const remove = (i: number) => onChange(specs.filter((_, idx) => idx !== i));
+
+  return (
+    <div>
+      <div className="mb-2 flex items-center justify-between">
+        <label className="text-sm font-medium text-neutral-700">Спецификации</label>
+        <button type="button" onClick={add} className="text-xs font-medium text-primary-600 hover:underline">+ Добави</button>
+      </div>
+      {specs.length === 0 && <p className="text-xs text-neutral-400">Няма спецификации. Натиснете &quot;+ Добави&quot;.</p>}
+      {specs.length > 0 && (
+        <div className="mb-1 flex items-start gap-2">
+          <div className="grid flex-1 gap-2 sm:grid-cols-3">
+            <span className="text-xs font-medium text-neutral-500">Label (EN)</span>
+            <span className="text-xs font-medium text-neutral-500">Име на спецификацията (BG)</span>
+            <span className="text-xs font-medium text-neutral-500">Стойност</span>
+          </div>
+          <div className="w-4" />
+        </div>
+      )}
+      <div className="space-y-2">
+        {specs.map((s, i) => (
+          <div key={i} className="flex items-start gap-2 rounded-lg border border-neutral-200 bg-neutral-50 p-3">
+            <div className="grid flex-1 gap-2 sm:grid-cols-3">
+              <input type="text" placeholder="напр. Voltage" value={s.label} onChange={(e) => update(i, "label", e.target.value)} className="w-full rounded border border-neutral-300 px-2 py-1.5 text-sm focus:border-primary-500 focus:outline-none" />
+              <input type="text" placeholder="напр. Напрежение" value={s.labelBg} onChange={(e) => update(i, "labelBg", e.target.value)} className="w-full rounded border border-neutral-300 px-2 py-1.5 text-sm focus:border-primary-500 focus:outline-none" />
+              <input type="text" placeholder="напр. 230V" value={s.value} onChange={(e) => update(i, "value", e.target.value)} className="w-full rounded border border-neutral-300 px-2 py-1.5 text-sm focus:border-primary-500 focus:outline-none" />
+            </div>
+            <button type="button" onClick={() => remove(i)} className="mt-1 text-red-500 hover:text-red-700" title="Изтрий">
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ListEditor({
+  label,
+  items,
+  onChange,
+}: {
+  label: string;
+  items: string[];
+  onChange: (v: string[]) => void;
+}) {
+  const update = (i: number, val: string) => {
+    const next = items.map((s, idx) => (idx === i ? val : s));
+    onChange(next);
+  };
+  const add = () => onChange([...items, ""]);
+  const remove = (i: number) => onChange(items.filter((_, idx) => idx !== i));
+
+  return (
+    <div>
+      <div className="mb-2 flex items-center justify-between">
+        <label className="text-sm font-medium text-neutral-700">{label}</label>
+        <button type="button" onClick={add} className="text-xs font-medium text-primary-600 hover:underline">+ Добави</button>
+      </div>
+      {items.length === 0 && <p className="text-xs text-neutral-400">Няма елементи.</p>}
+      <div className="space-y-1">
+        {items.map((item, i) => (
+          <div key={i} className="flex items-center gap-2">
+            <input type="text" value={item} onChange={(e) => update(i, e.target.value)} className="w-full rounded border border-neutral-300 px-2 py-1.5 text-sm focus:border-primary-500 focus:outline-none" />
+            <button type="button" onClick={() => remove(i)} className="text-red-500 hover:text-red-700" title="Изтрий">
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );

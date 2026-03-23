@@ -12,7 +12,7 @@ interface CompanyInfoRow {
   tagline_en: string;
   description: string;
   description_en: string;
-  values: { icon: string; title: string; titleEn: string; desc: string; descEn: string }[];
+  values: { bg: string; en: string }[];
   mission: string;
   mission_en: string;
   contact: {
@@ -204,16 +204,9 @@ export default function AdminCompanyInfoPage() {
           </div>
         </Section>
 
-        {/* Values (JSON) */}
-        <Section title="Ценности (JSON)">
-          <textarea
-            value={JSON.stringify(form.values, null, 2)}
-            onChange={(e) => {
-              try { set("values", JSON.parse(e.target.value)); } catch { /* ignore invalid JSON */ }
-            }}
-            rows={12}
-            className="input-field w-full font-mono text-xs"
-          />
+        {/* Values */}
+        <Section title="Ценности">
+          <ValuesEditor values={form.values ?? []} onChange={(v) => set("values", v)} />
         </Section>
       </div>
 
@@ -221,7 +214,7 @@ export default function AdminCompanyInfoPage() {
         .input-field {
           width: 100%;
           border-radius: 0.5rem;
-          border: 1px solid #d4d4d4;
+          border: 1px solid #a3a3a3;
           padding: 0.5rem 0.75rem;
           font-size: 0.875rem;
         }
@@ -230,6 +223,49 @@ export default function AdminCompanyInfoPage() {
           outline: none;
         }
       `}</style>
+    </div>
+  );
+}
+
+function ValuesEditor({
+  values,
+  onChange,
+}: {
+  values: { bg: string; en: string }[];
+  onChange: (v: { bg: string; en: string }[]) => void;
+}) {
+  const update = (i: number, field: string, val: string) => {
+    const next = values.map((v, idx) => (idx === i ? { ...v, [field]: val } : v));
+    onChange(next);
+  };
+  const add = () => onChange([...values, { bg: "", en: "" }]);
+  const remove = (i: number) => onChange(values.filter((_, idx) => idx !== i));
+
+  return (
+    <div>
+      <div className="mb-3 flex items-center justify-between">
+        <p className="text-sm text-neutral-500">Добавяйте, редактирайте или премахвайте ценности на фирмата.</p>
+        <button type="button" onClick={add} className="text-xs font-medium text-primary-600 hover:underline">+ Добави ценност</button>
+      </div>
+      {values.length === 0 && <p className="text-xs text-neutral-400">Няма ценности.</p>}
+      {values.length > 0 && (
+        <div className="mb-1 grid grid-cols-[1fr_1fr_auto] gap-2">
+          <span className="text-xs font-medium text-neutral-500">🇧🇬 Ценност (BG)</span>
+          <span className="text-xs font-medium text-neutral-500">🇬🇧 Value (EN)</span>
+          <span className="w-6" />
+        </div>
+      )}
+      <div className="space-y-2">
+        {values.map((v, i) => (
+          <div key={i} className="grid grid-cols-[1fr_1fr_auto] items-center gap-2">
+            <input type="text" value={v.bg} onChange={(e) => update(i, "bg", e.target.value)} placeholder="напр. Честност" className="w-full rounded-lg border border-neutral-400 bg-white px-3 py-2 text-sm focus:border-primary-500 focus:outline-none" />
+            <input type="text" value={v.en} onChange={(e) => update(i, "en", e.target.value)} placeholder="e.g. Honesty" className="w-full rounded-lg border border-neutral-400 bg-white px-3 py-2 text-sm focus:border-primary-500 focus:outline-none" />
+            <button type="button" onClick={() => remove(i)} className="text-red-500 hover:text-red-700" title="Премахни">
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
