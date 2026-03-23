@@ -42,4 +42,3 @@ next-env.d.ts
 
 # supabase migration folder (top-level only, not src/lib/supabase/)
 /supabase
-public/robots.txt
