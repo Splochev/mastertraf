@@ -55,9 +55,12 @@ export function GalleryFilter({
               loading="lazy"
             />
 
-            <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity group-hover:opacity-100">
+            <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/90 to-transparent opacity-0 transition-opacity group-hover:opacity-100">
               <div className="p-4">
-                <p className="text-sm font-medium text-white">{item.altBg}</p>
+                <p className="text-sm font-bold text-white">{item.altBg}</p>
+                {item.description && item.description.trim() !== "" && (
+                  <p className="mt-1 text-xs font-medium text-white/90 drop-shadow-sm">{item.description}</p>
+                )}
                 {item.type === "video" && item.videoUrl && (
                   <a
                     href={item.videoUrl}

@@ -13,6 +13,7 @@ interface GalleryRow {
   type: string;
   video_url: string | null;
   sort_order: number;
+  description?: string;
 }
 
 const emptyGallery: GalleryRow = {
@@ -23,6 +24,7 @@ const emptyGallery: GalleryRow = {
   type: "image",
   video_url: null,
   sort_order: 0,
+  description: "",
 };
 
 export default function AdminGalleryPage() {
@@ -124,6 +126,9 @@ export default function AdminGalleryPage() {
             )}
             <div className="p-3">
               <p className="text-sm font-medium text-neutral-900">{item.alt_bg}</p>
+              {item.description && item.description.trim() !== "" && (
+                <p className="mt-1 text-xs text-neutral-700">{item.description}</p>
+              )}
               <p className="text-xs text-neutral-500">
                 {item.category} · {item.type} · Ред: {item.sort_order}
               </p>
@@ -173,6 +178,14 @@ function GalleryForm({
         {initial.id ? "Редактиране" : "Нов елемент"}
       </h2>
       <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label className="mb-1 block text-sm font-medium text-neutral-700">Описание</label>
+          <textarea
+            value={form.description ?? ""}
+            onChange={(e) => set("description", e.target.value)}
+            className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none min-h-[38px]"
+          />
+        </div>
         <div>
           <label className="mb-1 block text-sm font-medium text-neutral-700">Източник (URL)</label>
           <input type="text" value={form.src} onChange={(e) => set("src", e.target.value)} className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none" />

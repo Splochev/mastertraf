@@ -8,6 +8,7 @@ export interface GalleryItem {
   altBg: string;
   category: string;
   type: "image" | "video";
+  description: string;
   videoUrl?: string;
 }
 
@@ -31,6 +32,7 @@ export const getGalleryItems = cache(async (): Promise<GalleryItem[]> => {
     category: row.category,
     type: row.type as "image" | "video",
     videoUrl: row.video_url ?? undefined,
+    description: row.description ?? '',
   }));
 });
 
