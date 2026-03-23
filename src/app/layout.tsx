@@ -40,9 +40,13 @@ export const metadata: Metadata = {
   authors: [{ name: "МАСТЕРТРАФ ЕООД" }],
   creator: "МАСТЕРТРАФ",
   icons: {
-    icon: "/logo.ico",
+    icon: [
+      { url: "/logo.ico", sizes: "any" },
+      { url: "/fav-icon.ico", type: "image/png", sizes: "192x192" },
+      { url: "/fav-icon.ico", type: "image/png", sizes: "512x512" },
+    ],
     shortcut: "/logo.ico",
-    apple: "/logo.ico",
+    apple: "/fav-icon.ico",
   },
   openGraph: {
     type: "website",

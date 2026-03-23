@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 
 export default function AdminLoginPage() {
@@ -35,9 +36,7 @@ export default function AdminLoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-neutral-900 px-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-white">
-            <span className="text-primary-500">MASTER</span>TRAF
-          </h1>
+          <Image src="/logo.jpg" alt="MASTERTRAF" width={240} height={60} className="mx-auto h-16 w-auto" priority />
           <p className="mt-2 text-sm text-neutral-400">
             Вход в администрацията
           </p>

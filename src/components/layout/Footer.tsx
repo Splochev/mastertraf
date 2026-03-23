@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { getCompanyInfo } from "@/data/company";
 
@@ -11,8 +12,8 @@ export async function Footer() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <Link href="/" className="text-xl font-bold text-white">
-              <span className="text-primary-500">MASTER</span>TRAF
+            <Link href="/">
+              <Image src="/logo.jpg" alt="MASTERTRAF" width={180} height={48} className="h-12 w-auto" />
             </Link>
             <p className="mt-3 text-sm leading-relaxed text-neutral-400">
               {companyInfo.description}

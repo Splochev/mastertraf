@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
@@ -70,10 +71,10 @@ export default function AdminLayout({
       <aside className="w-64 shrink-0 border-r border-neutral-200 bg-neutral-900 p-5">
         <Link
           href="/admin/products"
-          className="mb-8 block text-xl font-bold text-white"
+          className="mb-8 flex items-center gap-2"
         >
-          <span className="text-primary-500">MASTER</span>TRAF
-          <span className="ml-2 text-xs font-normal text-neutral-400">
+          <Image src="/logo.jpg" alt="MASTERTRAF" width={150} height={40} className="h-10 w-auto" />
+          <span className="text-xs font-normal text-neutral-400">
             Admin
           </span>
         </Link>
