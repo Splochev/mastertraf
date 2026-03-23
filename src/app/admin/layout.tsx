@@ -23,6 +23,7 @@ export default function AdminLayout({
 }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [revalidating, setRevalidating] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const supabase = createClient();
@@ -45,6 +46,17 @@ export default function AdminLayout({
   const handleLogout = async () => {
     await supabase.auth.signOut();
     router.push("/admin");
+  };
+
+  const handleRevalidate = async () => {
+    setRevalidating(true);
+    try {
+      const res = await fetch("/api/revalidate", { method: "POST" });
+      if (!res.ok) throw new Error();
+    } catch {
+      // silently fail
+    }
+    setRevalidating(false);
   };
 
   if (loading) {
@@ -96,6 +108,13 @@ export default function AdminLayout({
         </nav>
 
         <div className="mt-auto pt-8">
+          <button
+            onClick={handleRevalidate}
+            disabled={revalidating}
+            className="mb-3 w-full rounded-lg bg-primary-500/20 px-3 py-2 text-sm font-medium text-primary-400 transition-colors hover:bg-primary-500/30 disabled:opacity-50"
+          >
+            {revalidating ? "Обновяване..." : "⟳ Обнови сайта"}
+          </button>
           <div className="border-t border-neutral-700 pt-4">
             <p className="truncate text-xs text-neutral-500">{user.email}</p>
             <button
