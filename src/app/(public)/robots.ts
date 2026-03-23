@@ -1,16 +1,21 @@
-import type { MetadataRoute } from "next";
+import { NextResponse } from "next/server";
 import { siteConfig } from "@/lib/config";
 
-export default function robots(): MetadataRoute.Robots {
-  return {
-    rules: [
-      {
-        userAgent: "*",
-        allow: "/",
-        disallow: ["/api/", "/_next/"],
+export async function GET() {
+  return new NextResponse(
+    [
+      "User-agent: *",
+      "Allow: /",
+      "Disallow: /api/",
+      "Disallow: /_next/",
+      `Sitemap: ${siteConfig.url}/sitemap.xml`,
+      `Host: ${siteConfig.url}`,
+      "",
+    ].join("\n"),
+    {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
       },
-    ],
-    sitemap: `${siteConfig.url}/sitemap.xml`,
-    host: siteConfig.url,
-  };
+    }
+  );
 }
