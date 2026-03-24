@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/uslugi", label: "Услуги" },
   { href: "/produkti", label: "Продукти" },
   { href: "/galeriya", label: "Галерия" },
+  { href: "/blog", label: "Блог" },
   { href: "/kontakti", label: "Контакти" },
 ];
 

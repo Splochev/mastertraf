@@ -14,6 +14,7 @@ const navItems = [
   { href: "/admin/gallery", label: "Галерия" },
   { href: "/admin/company-info", label: "Фирмена информация" },
   { href: "/admin/images", label: "Изображения" },
+  { href: "/admin/blog", label: "Блог" },
 ];
 
 export default function AdminLayout({
