@@ -12,6 +12,7 @@ interface ServiceRow {
   description_bg: string;
   icon: string;
   sort_order: number;
+  price?: string;
 }
 
 const emptyService: ServiceRow = {
@@ -22,6 +23,7 @@ const emptyService: ServiceRow = {
   description_bg: "",
   icon: "",
   sort_order: 0,
+  price: "",
 };
 
 export default function AdminServicesPage() {
@@ -108,6 +110,7 @@ export default function AdminServicesPage() {
               <th className="px-4 py-3 font-medium text-neutral-600">Заглавие (BG)</th>
               <th className="px-4 py-3 font-medium text-neutral-600">Slug</th>
               <th className="px-4 py-3 font-medium text-neutral-600">Икона</th>
+              <th className="px-4 py-3 font-medium text-neutral-600">Цена</th>
               <th className="px-4 py-3 font-medium text-neutral-600">Действия</th>
             </tr>
           </thead>
@@ -118,6 +121,7 @@ export default function AdminServicesPage() {
                 <td className="px-4 py-3 font-medium text-neutral-900">{item.title_bg}</td>
                 <td className="px-4 py-3 text-neutral-500">{item.slug}</td>
                 <td className="px-4 py-3 text-neutral-500">{item.icon}</td>
+                <td className="px-4 py-3 text-neutral-500">{item.price || "—"}</td>
                 <td className="px-4 py-3">
                   <button
                     onClick={() => { setEditing(item); setShowForm(true); }}
@@ -183,6 +187,9 @@ function ServiceForm({
         </Field>
         <Field label="Ред (sort_order)">
           <input type="number" value={form.sort_order} onChange={(e) => set("sort_order", Number(e.target.value) || 0)} className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none" />
+        </Field>
+        <Field label="Цена (текст, по избор)">
+          <input type="text" value={form.price ?? ""} onChange={(e) => set("price", e.target.value)} placeholder="напр. от 50 лв., по заявка, безплатна диагностика" className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none" />
         </Field>
       </div>
       <div className="mt-4 flex gap-3">

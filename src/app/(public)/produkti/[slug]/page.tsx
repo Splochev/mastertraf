@@ -103,6 +103,18 @@ export default async function ProductPage({
               {product.descriptionBg}
             </p>
 
+            {/* Price */}
+            {product.price && product.price.trim() !== "" && (
+              <div className="mt-6 rounded-xl bg-green-50 p-4">
+                <h2 className="text-sm font-semibold uppercase tracking-wide text-green-700">
+                  Цена
+                </h2>
+                <p className="mt-1 text-2xl font-bold text-green-900">
+                  {product.price}
+                </p>
+              </div>
+            )}
+
             {/* Specs */}
             {product.specs.length > 0 && (
               <div className="mt-8">
