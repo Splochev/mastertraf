@@ -41,13 +41,14 @@ export default function AdminImagesPage() {
     setUploading(true);
     setError("");
 
-    const ext = file.name.split(".").pop();
-    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+    const fileName = file.name.trim().replace(/\s+/g, "-");
 
-    const { error } = await supabase.storage.from(BUCKET).upload(fileName, file, {
-      cacheControl: "3600",
-      upsert: false,
-    });
+    const { error } = await supabase.storage
+      .from(BUCKET)
+      .upload(fileName, file, {
+        cacheControl: "3600",
+        upsert: true,
+      });
 
     if (error) setError(error.message);
     setUploading(false);
