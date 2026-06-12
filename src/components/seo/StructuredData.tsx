@@ -33,7 +33,7 @@ export async function OrganizationSchema() {
       opens: "09:00",
       closes: "18:00",
     },
-    sameAs: [...companyInfo.social.facebook, companyInfo.social.youtube],
+    sameAs: [...companyInfo.social.facebook, companyInfo.social.youtube, companyInfo.social.instagram],
     priceRange: "$$",
     areaServed: {
       "@type": "Country",
