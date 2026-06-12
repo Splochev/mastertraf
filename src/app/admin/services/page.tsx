@@ -13,6 +13,7 @@ interface ServiceRow {
   icon: string;
   sort_order: number;
   price?: string;
+  images: string[];
 }
 
 const emptyService: ServiceRow = {
@@ -24,6 +25,7 @@ const emptyService: ServiceRow = {
   icon: "",
   sort_order: 0,
   price: "",
+  images: [],
 };
 
 export default function AdminServicesPage() {
@@ -191,6 +193,9 @@ function ServiceForm({
         <Field label="Цена (текст, по избор)">
           <input type="text" value={form.price ?? ""} onChange={(e) => set("price", e.target.value)} placeholder="напр. от 50 лв., по заявка, безплатна диагностика" className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none" />
         </Field>
+        <div className="sm:col-span-2">
+          <ListEditor label="Снимки (URL)" items={form.images ?? []} onChange={(v) => set("images", v)} />
+        </div>
       </div>
       <div className="mt-4 flex gap-3">
         <button onClick={() => onSave(form)} disabled={saving} className="rounded-lg bg-primary-500 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-600 disabled:opacity-50">
@@ -209,6 +214,43 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
     <div>
       <label className="mb-1 block text-sm font-medium text-neutral-700">{label}</label>
       {children}
+    </div>
+  );
+}
+
+function ListEditor({
+  label,
+  items,
+  onChange,
+}: {
+  label: string;
+  items: string[];
+  onChange: (v: string[]) => void;
+}) {
+  const update = (i: number, val: string) => {
+    const next = items.map((s, idx) => (idx === i ? val : s));
+    onChange(next);
+  };
+  const add = () => onChange([...items, ""]);
+  const remove = (i: number) => onChange(items.filter((_, idx) => idx !== i));
+
+  return (
+    <div>
+      <div className="mb-2 flex items-center justify-between">
+        <label className="text-sm font-medium text-neutral-700">{label}</label>
+        <button type="button" onClick={add} className="text-xs font-medium text-primary-600 hover:underline">+ Добави</button>
+      </div>
+      {items.length === 0 && <p className="text-xs text-neutral-400">Няма елементи.</p>}
+      <div className="space-y-1">
+        {items.map((item, i) => (
+          <div key={i} className="flex items-center gap-2">
+            <input type="text" value={item} onChange={(e) => update(i, e.target.value)} className="w-full rounded border border-neutral-300 px-2 py-1.5 text-sm focus:border-primary-500 focus:outline-none" />
+            <button type="button" onClick={() => remove(i)} className="text-red-500 hover:text-red-700" title="Изтрий">
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

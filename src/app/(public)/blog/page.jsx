@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { excerpt, firstImage } from "../../../utils/blogUtils";
 import { getAllArticles } from "../../../data/blog";
+import { notFound } from "next/navigation";
 
 // ─── Featured card (first article, full-width hero layout) ───────────────────
 function FeaturedCard({ article }) {
@@ -156,6 +157,7 @@ function ArticleCard({ article }) {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default async function BlogPage() {
+  notFound();
   const allArticles = await getAllArticles();
   const [featured, ...rest] = allArticles;
 

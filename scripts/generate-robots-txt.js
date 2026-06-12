@@ -46,4 +46,3 @@ const publicDir = path.join(__dirname, "..", "public");
 const robotsPath = path.join(publicDir, "robots.txt");
 
 fs.writeFileSync(robotsPath, robotsTxt, "utf8");
-console.log("robots.txt generated at", robotsPath);

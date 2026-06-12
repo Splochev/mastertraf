@@ -10,6 +10,7 @@ export interface Service {
   descriptionBg: string;
   icon: string;
   price: string;
+  images?: string[];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,6 +24,7 @@ function mapService(row: any): Service {
     descriptionBg: row.description_bg,
     icon: row.icon,
     price: row.price,
+    images: row.images ?? [],
   };
 }
 

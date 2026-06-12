@@ -1,4 +1,5 @@
 import type { Service } from "@/data/services";
+import Link from "next/link";
 
 const iconMap: Record<string, React.ReactNode> = {
   wrench: (
@@ -47,12 +48,14 @@ const iconMap: Record<string, React.ReactNode> = {
 export function ServiceCard({
   service,
   pageIsServices,
+  showLink = false,
 }: {
   service: Service;
   pageIsServices?: boolean;
+  showLink?: boolean;
 }) {
-  return (
-    <article className="rounded-2xl border border-neutral-200 bg-white p-6 transition-all hover:shadow-lg hover:border-primary-200">
+  const cardContent = (
+    <>
       <div className="mb-4 inline-flex rounded-xl bg-primary-50 p-3 text-primary-600">
         {iconMap[service.icon] || iconMap.wrench}
       </div>
@@ -71,6 +74,23 @@ export function ServiceCard({
           <span className="text-xs font-semibold text-primary-700">{service.price}</span>
         </div>
       )}
+    </>
+  );
+
+  if (showLink) {
+    return (
+      <Link
+        href={`/uslugi/${service.slug}`}
+        className="group block rounded-2xl border border-neutral-200 bg-white p-6 transition-all hover:shadow-lg hover:border-primary-200"
+      >
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return (
+    <article className="rounded-2xl border border-neutral-200 bg-white p-6 transition-all hover:shadow-lg hover:border-primary-200">
+      {cardContent}
     </article>
   );
 }

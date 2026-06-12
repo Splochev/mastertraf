@@ -3,6 +3,7 @@ import { getGalleryItems, getGalleryCategories } from "@/data/gallery";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { WebPageSchema } from "@/components/seo/StructuredData";
 import { GalleryFilter } from "@/components/ui/GalleryFilter";
+import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Галерия – Снимки и видеа от нашата работа",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function GalleryPage() {
+  notFound();
   const [galleryItems, galleryCategories] = await Promise.all([
     getGalleryItems(),
     getGalleryCategories(),
