@@ -31,20 +31,19 @@ export default async function Home() {
           <div className="absolute -bottom-20 -right-20 h-96 w-96 rounded-full bg-primary-500 blur-3xl" />
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
+        <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
           <div className="max-w-3xl">
             <span className="inline-block rounded-full bg-primary-500/10 px-4 py-1.5 text-sm font-semibold text-primary-400">
               Произведено в България 🇧🇬
             </span>
-            <h1 id="hero-heading" className="mt-6 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Ремонт и изработка на{" "}
-              <span className="text-primary-500">трансформатори</span> и{" "}
-              <span className="text-primary-500">заваръчна техника</span>
+            <h1 id="hero-heading" className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+              Проектиране, изработка и ремонт на{" "}
+              <span className="text-primary-500">специализирана трансформаторна техника</span>
             </h1>
-            <p className="mt-6 text-lg leading-relaxed text-neutral-300 sm:text-xl">
+            <p className="mt-3 text-lg leading-relaxed text-neutral-300 sm:text-xl">
               {companyInfo.description} Професионално обслужване с 24 месеца гаранция.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
+            <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:gap-3">
               <Link
                 href="/produkti"
                 className="inline-flex items-center justify-center rounded-xl bg-primary-500 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-primary-600"
@@ -64,10 +63,10 @@ export default async function Home() {
           </div>
 
           {/* Trust signals */}
-          <div className="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {[
               { stat: "24", label: "месеца гаранция" },
-              { stat: "10+", label: "вида продукти" },
+              { stat: "20+", label: "вида продукти" },
               { stat: "100%", label: "български продукт" },
               { stat: "10+", label: "години опит" },
             ].map((item) => (
@@ -81,25 +80,25 @@ export default async function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 sm:py-24" aria-labelledby="services-heading">
+      <section className="py-6 sm:py-8" aria-labelledby="services-heading">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <span className="text-sm font-semibold uppercase tracking-wider text-primary-600">
               Какво предлагаме
             </span>
-            <h2 id="services-heading" className="mt-2 text-3xl font-bold text-neutral-900 sm:text-4xl">
+            <h2 id="services-heading" className="mt-1 text-3xl font-bold text-neutral-900 sm:text-4xl">
               Нашите услуги
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-neutral-600">
-              Пълен набор от услуги за ремонт, поддръжка и изработка по поръчка на заваръчна техника.
+            <p className="mx-auto mt-2 max-w-2xl text-lg text-neutral-600">
+              С дългогодишен опит и професионален подход предлагаме надеждни услуги за проектиране, производство, ремонт и модернизация на трансформаторна техника и индустриално оборудване. Работим с фокус върху качеството, ефективността и индивидуалните изисквания на всеки клиент.
             </p>
           </div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {featuredServices.map((service) => (
               <ServiceCard key={service.id} service={service} />
             ))}
           </div>
-          <div className="mt-10 text-center">
+          <div className="mt-4 text-center">
             <Link
               href="/uslugi"
               className="inline-flex items-center text-base font-semibold text-primary-600 hover:text-primary-700"
@@ -114,25 +113,25 @@ export default async function Home() {
       </section>
 
       {/* Products Section */}
-      <section className="bg-neutral-100 py-20 sm:py-24" aria-labelledby="products-heading">
+      <section className="bg-neutral-100 py-6 sm:py-8" aria-labelledby="products-heading">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <span className="text-sm font-semibold uppercase tracking-wider text-primary-600">
               Каталог
             </span>
-            <h2 id="products-heading" className="mt-2 text-3xl font-bold text-neutral-900 sm:text-4xl">
+            <h2 id="products-heading" className="mt-1 text-3xl font-bold text-neutral-900 sm:text-4xl">
               Популярни продукти
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-neutral-600">
-              Български заваръчни апарати с професионално качество и 24 месеца гаранция.
+            <p className="mx-auto mt-2 max-w-2xl text-lg text-neutral-600">
+              Българска трансформаторна техника с професионално качество и доказана надеждност. Всички продукти са с 24 месеца гаранция и осигурено следгаранционно обслужване.
             </p>
           </div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {featuredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
-          <div className="mt-10 text-center">
+          <div className="mt-4 text-center">
             <Link
               href="/produkti"
               className="inline-flex items-center justify-center rounded-xl bg-primary-500 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-primary-600"
@@ -144,19 +143,19 @@ export default async function Home() {
       </section>
 
       {/* About Preview */}
-      <section className="py-20 sm:py-24" aria-labelledby="about-heading">
+      <section className="py-6 sm:py-8" aria-labelledby="about-heading">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <span className="text-sm font-semibold uppercase tracking-wider text-primary-600">
               За нас
             </span>
-            <h2 id="about-heading" className="mt-2 text-3xl font-bold text-neutral-900 sm:text-4xl">
-              Семеен бизнес с традиции в заваръчната техника
+            <h2 id="about-heading" className="mt-1 text-3xl font-bold text-neutral-900 sm:text-4xl">
+              Дългогодишен опит и утвърдени традиции в трансформаторната техника и индустриалното оборудване.
             </h2>
-            <p className="mt-4 text-lg leading-relaxed text-neutral-600">
+            <p className="mt-2 text-lg leading-relaxed text-neutral-600">
               {companyInfo.description} Нашата цел е {companyInfo.mission.toLowerCase()}
             </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <div className="mt-2 flex flex-wrap justify-center gap-2">
               {companyInfo.values.map((value) => (
                 <div key={value.bg} className="flex items-center gap-2">
                   <svg className="h-5 w-5 text-primary-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
@@ -168,7 +167,7 @@ export default async function Home() {
             </div>
             <Link
               href="/za-nas"
-              className="mt-8 inline-flex items-center text-base font-semibold text-primary-600 hover:text-primary-700"
+              className="mt-4 inline-flex items-center text-base font-semibold text-primary-600 hover:text-primary-700"
             >
               Научете повече за нас
               <svg className="ml-1.5 h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
@@ -181,14 +180,14 @@ export default async function Home() {
 
       {/* CTA Section */}
       <section className="bg-primary-500" aria-labelledby="cta-heading">
-        <div className="mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-8 text-center sm:px-6 sm:py-12 lg:px-8">
           <h2 id="cta-heading" className="text-3xl font-bold text-white sm:text-4xl">
             Нуждаете се от ремонт или нов апарат?
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-white/90">
+          <p className="mx-auto mt-2 max-w-2xl text-lg text-white/90">
             Свържете се с нас за безплатна консултация. Работим с индивидуален подход и предлагаме най-доброто решение за вашите нужди.
           </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="mt-4 flex flex-col items-center justify-center gap-2 sm:flex-row">
             <a
               href={`tel:${companyInfo.contact.phone}`}
               className="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3.5 text-base font-semibold text-primary-600 transition-colors hover:bg-neutral-100"
@@ -209,7 +208,7 @@ export default async function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 sm:py-24" aria-labelledby="faq-section-heading">
+      <section className="py-6 sm:py-8" aria-labelledby="faq-section-heading">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <span className="text-sm font-semibold uppercase tracking-wider text-primary-600">

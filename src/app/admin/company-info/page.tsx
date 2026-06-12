@@ -25,7 +25,7 @@ interface CompanyInfoRow {
     workingHours: string;
     workingHoursEn: string;
   };
-  social: { facebook: string; youtube: string };
+  social: { facebook: string; youtube: string; instagram: string };
   map_lat: number;
   map_lng: number;
   domain: string;
@@ -194,6 +194,9 @@ export default function AdminCompanyInfoPage() {
             </Field>
             <Field label="YouTube URL">
               <input type="text" value={form.social.youtube} onChange={(e) => setSocial("youtube", e.target.value)} className="input-field" />
+            </Field>
+            <Field label="Instagram URL">
+              <input type="text" value={form.social.instagram} onChange={(e) => setSocial("instagram", e.target.value)} className="input-field" />
             </Field>
             <Field label="Ширина (map_lat)">
               <input type="number" step="any" value={form.map_lat} onChange={(e) => set("map_lat", parseFloat(e.target.value) || 0)} className="input-field" />

@@ -25,6 +25,7 @@ export interface CompanyInfo {
   social: {
     facebook: string[];
     youtube: string;
+    instagram: string;
   };
   mapCoordinates: { lat: number; lng: number };
   domain: string;
