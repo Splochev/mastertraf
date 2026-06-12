@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getCompanyInfo } from "@/data/company";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
-import { WebPageSchema } from "@/components/seo/StructuredData";
+import { ContactPageSchema } from "@/components/seo/StructuredData";
 
 export const metadata: Metadata = {
   title: "Контакти – МАСТЕРТРАФ | Телефон, адрес и работно време",
@@ -15,11 +15,7 @@ export default async function ContactPage() {
 
   return (
     <>
-      <WebPageSchema
-        title="Контакти – МАСТЕРТРАФ"
-        description="Свържете се с нас – телефон, адрес и работно време"
-        url="/kontakti"
-      />
+      <ContactPageSchema />
 
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ label: "Контакти" }]} />

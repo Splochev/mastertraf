@@ -96,6 +96,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="bg" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>
+        {/* DNS Prefetch and Preconnect for performance */}
+        <link rel="dns-prefetch" href="https://vercel.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body className="flex min-h-screen flex-col">
         {children}
         <Analytics />

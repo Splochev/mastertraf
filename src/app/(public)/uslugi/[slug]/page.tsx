@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getServices, getServiceBySlug } from "@/data/services";
 import { getCompanyInfo } from "@/data/company";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
-import { WebPageSchema } from "@/components/seo/StructuredData";
+import { ServiceSchema } from "@/components/seo/StructuredData";
 import { ImageGallery } from "@/components/ui/ImageGallery";
 import { notFound } from "next/navigation";
 
@@ -95,11 +95,7 @@ export default async function ServicePage({
 
   return (
     <>
-      <WebPageSchema
-        title={service.titleBg}
-        description={service.descriptionBg}
-        url={`/uslugi/${service.slug}`}
-      />
+      <ServiceSchema service={service} />
 
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <Breadcrumbs

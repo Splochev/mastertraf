@@ -1,6 +1,7 @@
 import { siteConfig } from "@/lib/config";
 import { getCompanyInfo } from "@/data/company";
 import type { Product } from "@/data/products";
+import type { Service } from "@/data/services";
 import type { FAQItem } from "@/data/faq";
 
 export async function OrganizationSchema() {
@@ -148,6 +149,73 @@ export async function WebPageSchema({
       name: companyInfo.legalName,
     },
     inLanguage: "bg",
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
+
+export async function ServiceSchema({ service }: { service: Service }) {
+  const companyInfo = await getCompanyInfo();
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.titleBg,
+    description: service.descriptionBg,
+    url: `${siteConfig.url}/uslugi/${service.slug}`,
+    provider: {
+      "@type": "Organization",
+      name: companyInfo.legalName,
+      url: siteConfig.url,
+      telephone: companyInfo.contact.phone,
+      email: companyInfo.contact.email,
+    },
+    areaServed: {
+      "@type": "Country",
+      name: "Bulgaria",
+    },
+    serviceType: "Specialized equipment repair and maintenance",
+    availableLanguage: ["bg", "en"],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
+
+export async function ContactPageSchema() {
+  const companyInfo = await getCompanyInfo();
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: "Контакти – МАСТЕРТРАФ",
+    url: `${siteConfig.url}/kontakti`,
+    mainEntity: {
+      "@type": "LocalBusiness",
+      name: companyInfo.legalName,
+      url: siteConfig.url,
+      telephone: companyInfo.contact.phone,
+      email: companyInfo.contact.email,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "ж.к. Овча купел",
+        addressLocality: "София",
+        addressCountry: "BG",
+      },
+      openingHoursSpecification: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "18:00",
+      },
+    },
   };
 
   return (
