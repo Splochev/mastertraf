@@ -41,11 +41,11 @@ export const metadata: Metadata = {
   creator: "МАСТЕРТРАФ",
   icons: {
     icon: [
-      { url: "/logo.ico", sizes: "any" },
+      { url: "/fav-icon.ico", sizes: "any" },
       { url: "/fav-icon.ico", type: "image/png", sizes: "192x192" },
       { url: "/fav-icon.ico", type: "image/png", sizes: "512x512" },
     ],
-    shortcut: "/logo.ico",
+    shortcut: "/fav-icon.ico",
     apple: "/fav-icon.ico",
   },
   openGraph: {

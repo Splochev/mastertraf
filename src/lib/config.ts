@@ -1,6 +1,5 @@
 export const siteConfig = {
-  // url: "https://mastertraf.net",
-  url: "https://mastertraf.vercel.app",
+  url: "https://www.mastertraf.net",
   name: "МАСТЕРТРАФ",
   nameEn: "MASTERTRAF",
   locale: "bg_BG",

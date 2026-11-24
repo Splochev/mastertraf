@@ -12,7 +12,7 @@ export async function OrganizationSchema() {
     name: companyInfo.legalName,
     alternateName: companyInfo.nameEn,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/images/logo.png`,
+    logo: `${siteConfig.url}/logo.jpg`,
     image: `${siteConfig.url}/images/og-image.jpg`,
     description: companyInfo.description,
     address: {
