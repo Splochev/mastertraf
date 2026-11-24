@@ -3,6 +3,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { renderHtml, generateSlug } from "@/utils/blogUtils";
+import { sanitizeArticleHtml } from "@/utils/sanitizeHtml";
 import type { EditorBlock } from "./EditorCore";
 
 const EditorCore = dynamic(() => import("./EditorCore"), {
@@ -208,7 +209,7 @@ const inputCls =
 // ─── Preview ──────────────────────────────────────────────────────────────────
 
 function ArticlePreview({ title, html }: { title: string; html: string }) {
-  const renderedHtml = renderHtml(html);
+  const renderedHtml = sanitizeArticleHtml(renderHtml(html));
 
   return (
     <div className="rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">

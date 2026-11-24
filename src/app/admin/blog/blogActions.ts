@@ -3,6 +3,17 @@
 import { revalidatePath } from "next/cache";
 import { createArticle, updateArticle, deleteArticle, type ArticlePayload } from "@/data/blog";
 import { generateSlug } from "@/utils/blogUtils";
+import { createClient } from "@/lib/supabase/server";
+
+// Server actions are public POST endpoints, so verify the session explicitly
+// (RLS in Supabase is the second line of defense).
+async function requireUser() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("Unauthorized");
+}
 
 export interface SaveArticleInput {
   id?: number;
@@ -16,6 +27,7 @@ export interface SaveArticleInput {
 }
 
 export async function saveArticleAction(input: SaveArticleInput) {
+  await requireUser();
   const payload: ArticlePayload = {
     title: input.title.trim(),
     html: input.html,
@@ -38,6 +50,7 @@ export async function saveArticleAction(input: SaveArticleInput) {
 }
 
 export async function deleteArticleAction(id: number) {
+  await requireUser();
   await deleteArticle(id);
   revalidatePath("/blog");
   revalidatePath("/admin/blog");

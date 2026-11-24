@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { excerpt, firstImage, renderHtml, styleLinks } from "../../../../utils/blogUtils";
+import { sanitizeArticleHtml } from "../../../../utils/sanitizeHtml";
 import { getAllArticles, getArticleBySlug } from "../../../../data/blog";
 
 export async function generateMetadata({ params }) {
@@ -36,7 +37,7 @@ export default async function ArticlePage({ params }) {
   // Related = other articles, max 3
   const related = allArticles.filter((a) => a.id !== article.id).slice(0, 3);
 
-  const renderedHtml = styleLinks(renderHtml(article.html));
+  const renderedHtml = sanitizeArticleHtml(styleLinks(renderHtml(article.html)));
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">

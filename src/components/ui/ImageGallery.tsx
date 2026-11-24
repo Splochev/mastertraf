@@ -8,8 +8,19 @@ interface ImageGalleryProps {
   alt: string;
 }
 
+/**
+ * Extracts the video ID from a stored YouTube embed code or URL.
+ * Only the ID is used; the iframe is built here, so arbitrary HTML from the
+ * database is never injected into the page.
+ */
+function getYouTubeId(src: string): string | null {
+  const match =
+    /(?:youtube(?:-nocookie)?\.com\/(?:embed\/|watch\?v=|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/.exec(src);
+  return match ? match[1] : null;
+}
+
 function isYouTubeEmbed(src: string): boolean {
-  return src.includes("<iframe") && src.includes("youtube.com/embed");
+  return getYouTubeId(src) !== null;
 }
 
 export function ImageGallery({ images, alt }: ImageGalleryProps) {
@@ -42,9 +53,13 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
       {/* Main image or video */}
       <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-100">
         {isYouTubeEmbed(images[selectedIndex]) ? (
-          <div
-            dangerouslySetInnerHTML={{ __html: images[selectedIndex] }}
-            className="flex h-full w-full items-center justify-center"
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${getYouTubeId(images[selectedIndex])}`}
+            title={`${alt} – видео`}
+            className="h-full w-full"
+            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
           />
         ) : (
           <Image
