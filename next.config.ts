@@ -26,7 +26,7 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       // Legacy WordPress URLs from the old site
-      { source: "/wp-content/:path*", destination: "/galeriya", permanent: true },
+      { source: "/wp-content/:path*", destination: "/produkti", permanent: true },
       { source: "/page-sitemap.xml", destination: "/sitemap.xml", permanent: true },
       { source: "/sitemap_index.xml", destination: "/sitemap.xml", permanent: true },
       { source: "/wp-admin/:path*", destination: "/", permanent: true },

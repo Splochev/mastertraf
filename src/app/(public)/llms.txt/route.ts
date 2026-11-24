@@ -34,7 +34,6 @@ ${products.map((p) => `- [${p.nameBg}](${siteConfig.url}/produkti/${p.slug}): ${
 - About: ${siteConfig.url}/za-nas
 - Services: ${siteConfig.url}/uslugi
 - Products: ${siteConfig.url}/produkti
-- Gallery: ${siteConfig.url}/galeriya
 - Contact: ${siteConfig.url}/kontakti
 
 ## AI Crawler Policy

@@ -29,7 +29,7 @@ export async function Footer() {
               <li><Link href="/za-nas" className="hover:text-primary-400 transition-colors">За нас</Link></li>
               <li><Link href="/uslugi" className="hover:text-primary-400 transition-colors">Услуги</Link></li>
               <li><Link href="/produkti" className="hover:text-primary-400 transition-colors">Продукти</Link></li>
-              <li><Link href="/galeriya" className="hover:text-primary-400 transition-colors">Галерия</Link></li>
+              {/* <li><Link href="/galeriya" className="hover:text-primary-400 transition-colors">Галерия</Link></li> */}
               <li><Link href="/kontakti" className="hover:text-primary-400 transition-colors">Контакти</Link></li>
               <li><Link href="/sitemap-html" className="hover:text-primary-400 transition-colors">Карта на сайта</Link></li>
             </ul>

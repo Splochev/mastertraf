@@ -33,7 +33,7 @@ export default async function HTMLSitemap() {
             <li><Link href="/za-nas" className="text-primary-600 hover:underline">За нас</Link></li>
             <li><Link href="/uslugi" className="text-primary-600 hover:underline">Услуги</Link></li>
             <li><Link href="/produkti" className="text-primary-600 hover:underline">Продукти</Link></li>
-            <li><Link href="/galeriya" className="text-primary-600 hover:underline">Галерия</Link></li>
+            {/* <li><Link href="/galeriya" className="text-primary-600 hover:underline">Галерия</Link></li> */}
             <li><Link href="/kontakti" className="text-primary-600 hover:underline">Контакти</Link></li>
           </ul>
         </section>
