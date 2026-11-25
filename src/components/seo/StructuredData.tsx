@@ -54,8 +54,8 @@ function absoluteUrl(src: string): string {
   return /^https?:\/\//.test(src) ? src : `${siteConfig.url}${src}`;
 }
 
-/** Parses free-text prices like "1 250,50 лв." or "€640" into a number; null if none. */
-function parsePrice(text?: string): { value: string; currency: string } | null {
+/** Parses free-text prices like "1 250,50 €" or "640 EUR" into a number; null if none. */
+function parsePrice(text?: string): string | null {
   if (!text) return null;
   const match = /\d[\d\s.,]*/.exec(text);
   if (!match) return null;
@@ -63,8 +63,7 @@ function parsePrice(text?: string): { value: string; currency: string } | null {
   if (num.includes(",")) num = num.replace(/\./g, "").replace(",", ".");
   const value = Number.parseFloat(num);
   if (!Number.isFinite(value) || value <= 0) return null;
-  const currency = /лв|bgn/i.test(text) ? "BGN" : "EUR";
-  return { value: value.toFixed(2), currency };
+  return value.toFixed(2);
 }
 
 export async function ProductSchema({ product }: { product: Product }) {
@@ -97,8 +96,8 @@ export async function ProductSchema({ product }: { product: Product }) {
           product.availability === "in-stock"
             ? "https://schema.org/InStock"
             : "https://schema.org/PreOrder",
-        priceCurrency: price.currency,
-        price: price.value,
+        priceCurrency: "EUR",
+        price,
         url,
         seller: {
           "@type": "Organization",

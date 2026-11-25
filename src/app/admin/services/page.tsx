@@ -191,7 +191,7 @@ function ServiceForm({
           <input type="number" value={form.sort_order} onChange={(e) => set("sort_order", Number(e.target.value) || 0)} className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none" />
         </Field>
         <Field label="Цена (текст, по избор)">
-          <input type="text" value={form.price ?? ""} onChange={(e) => set("price", e.target.value)} placeholder="напр. от 50 лв., по заявка, безплатна диагностика" className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none" />
+          <input type="text" value={form.price ?? ""} onChange={(e) => set("price", e.target.value)} placeholder="напр. от 25 €, по заявка, безплатна диагностика" className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none" />
         </Field>
         <div className="sm:col-span-2">
           <ListEditor label="Снимки (URL)" items={form.images ?? []} onChange={(v) => set("images", v)} />
