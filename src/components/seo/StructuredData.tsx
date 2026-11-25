@@ -50,14 +50,37 @@ export async function OrganizationSchema() {
   );
 }
 
+function absoluteUrl(src: string): string {
+  return /^https?:\/\//.test(src) ? src : `${siteConfig.url}${src}`;
+}
+
+/** Parses free-text prices like "1 250,50 лв." or "€640" into a number; null if none. */
+function parsePrice(text?: string): { value: string; currency: string } | null {
+  if (!text) return null;
+  const match = /\d[\d\s.,]*/.exec(text);
+  if (!match) return null;
+  let num = match[0].replace(/\s/g, "");
+  if (num.includes(",")) num = num.replace(/\./g, "").replace(",", ".");
+  const value = Number.parseFloat(num);
+  if (!Number.isFinite(value) || value <= 0) return null;
+  const currency = /лв|bgn/i.test(text) ? "BGN" : "EUR";
+  return { value: value.toFixed(2), currency };
+}
+
 export async function ProductSchema({ product }: { product: Product }) {
   const companyInfo = await getCompanyInfo();
+  const url = `${siteConfig.url}/produkti/${product.slug}`;
+  const images = [product.image, ...product.images]
+    .filter((src) => src && !src.includes("<iframe"))
+    .map(absoluteUrl);
+  const price = parsePrice(product.price);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.nameBg,
     description: product.descriptionBg,
-    image: `${siteConfig.url}${product.image}`,
+    image: [...new Set(images)],
     brand: {
       "@type": "Brand",
       name: "МАСТЕРТРАФ",
@@ -66,27 +89,24 @@ export async function ProductSchema({ product }: { product: Product }) {
       "@type": "Organization",
       name: companyInfo.legalName,
     },
-    offers: {
-      "@type": "Offer",
-      availability:
-        product.availability === "in-stock"
-          ? "https://schema.org/InStock"
-          : product.availability === "made-to-order"
-            ? "https://schema.org/PreOrder"
-            : "https://schema.org/OnlineOnly",
-      priceCurrency: "BGN",
-      price: "0",
-      // eslint-disable-next-line react-hooks/purity
-      priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
-      url: `${siteConfig.url}/produkti/${product.slug}`,
-      seller: {
-        "@type": "Organization",
-        name: companyInfo.legalName,
+    // Offers only when the product has a real price; "0" would tell Google it is free.
+    ...(price && {
+      offers: {
+        "@type": "Offer",
+        availability:
+          product.availability === "in-stock"
+            ? "https://schema.org/InStock"
+            : "https://schema.org/PreOrder",
+        priceCurrency: price.currency,
+        price: price.value,
+        url,
+        seller: {
+          "@type": "Organization",
+          name: companyInfo.legalName,
+        },
       },
-      warranty: "24 месеца гаранция",
-    },
-    url: `${siteConfig.url}/produkti/${product.slug}`,
-    category: product.category,
+    }),
+    url,
     countryOfOrigin: {
       "@type": "Country",
       name: "Bulgaria",
