@@ -19,6 +19,7 @@ interface ProductRow {
   images: string[];
   price: string | null;
   availability: string;
+  lead_time_days: number | null;
   warranty: string;
   category_slug: string;
   sort_order: number;
@@ -38,7 +39,8 @@ const emptyProduct: ProductRow = {
   image: "",
   images: [],
   price: null,
-  availability: "in-stock",
+  availability: "made-to-order",
+  lead_time_days: null,
   warranty: "24 месеца гаранция и следгаранционен сервиз",
   category_slug: "",
   sort_order: 0,
@@ -265,6 +267,14 @@ function ProductForm({
             <option value="contact">Свържете се</option>
           </select>
         </div>
+        <Input
+          label="Срок на изпълнение (работни дни)"
+          value={form.lead_time_days == null ? "" : String(form.lead_time_days)}
+          onChange={(v) => {
+            const days = Number.parseInt(v, 10);
+            set("lead_time_days", Number.isFinite(days) && days > 0 ? days : null);
+          }}
+        />
         <Input label="Гаранция" value={form.warranty} onChange={(v) => set("warranty", v)} />
         <Input label="Ред (sort_order)" value={String(form.sort_order)} onChange={(v) => set("sort_order", Number(v) || 0)} />
       </div>

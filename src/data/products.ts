@@ -17,6 +17,8 @@ export interface Product {
   images: string[];
   price?: string;
   availability: "in-stock" | "made-to-order" | "contact";
+  /** Working days needed to make the product after an order; undefined if not set. */
+  leadTimeDays?: number;
   warranty: string;
   category: string;
   categorySlug: string;
@@ -46,6 +48,7 @@ function mapProduct(row: any): Product {
     images: row.images ?? [],
     price: row.price ?? undefined,
     availability: row.availability,
+    leadTimeDays: row.lead_time_days ?? undefined,
     warranty: row.warranty,
     category: row.product_categories?.name ?? "",
     categorySlug: row.category_slug,

@@ -115,6 +115,21 @@ export default async function ProductPage({
               </div>
             )}
 
+            {/* Lead time and delivery */}
+            {product.leadTimeDays && (
+              <div className="mt-4 rounded-xl border border-neutral-200 p-4 text-sm text-neutral-700">
+                <p>
+                  <span className="font-semibold text-neutral-900">Срок на изпълнение:</span>{" "}
+                  до {product.leadTimeDays} {product.leadTimeDays === 1 ? "работен ден" : "работни дни"}
+                </p>
+                <p className="mt-1">
+                  <span className="font-semibold text-neutral-900">Доставка:</span> с Еконт или
+                  Спиди в България, обикновено на следващия ден. Куриерската услуга е за сметка
+                  на купувача.
+                </p>
+              </div>
+            )}
+
             {/* Specs */}
             {product.specs.length > 0 && (
               <div className="mt-8">

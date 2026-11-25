@@ -66,6 +66,23 @@ function parsePrice(text?: string): string | null {
   return value.toFixed(2);
 }
 
+function schemaAvailability(availability: Product["availability"]): string {
+  if (availability === "in-stock") return "https://schema.org/InStock";
+  if (availability === "made-to-order") return "https://schema.org/MadeToOrder";
+  return "https://schema.org/PreOrder";
+}
+
+/** Bulgaria only; unused items can be returned within 14 days by courier, return shipping paid by the customer. */
+const MERCHANT_RETURN_POLICY = {
+  "@type": "MerchantReturnPolicy",
+  applicableCountry: "BG",
+  returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+  merchantReturnDays: 14,
+  returnMethod: "https://schema.org/ReturnByMail",
+  returnFees: "https://schema.org/ReturnFeesCustomerResponsibility",
+  itemCondition: "https://schema.org/NewCondition",
+};
+
 export async function ProductSchema({ product }: { product: Product }) {
   const companyInfo = await getCompanyInfo();
   const url = `${siteConfig.url}/produkti/${product.slug}`;
@@ -92,13 +109,29 @@ export async function ProductSchema({ product }: { product: Product }) {
     ...(price && {
       offers: {
         "@type": "Offer",
-        availability:
-          product.availability === "in-stock"
-            ? "https://schema.org/InStock"
-            : "https://schema.org/PreOrder",
+        availability: schemaAvailability(product.availability),
         priceCurrency: "EUR",
         price,
         url,
+        shippingDetails: {
+          "@type": "OfferShippingDetails",
+          shippingDestination: { "@type": "DefinedRegion", addressCountry: "BG" },
+          deliveryTime: {
+            "@type": "ShippingDeliveryTime",
+            // Days to make the product after the order (only when set in the admin)
+            ...(product.leadTimeDays && {
+              handlingTime: {
+                "@type": "QuantitativeValue",
+                minValue: 0,
+                maxValue: product.leadTimeDays,
+                unitCode: "DAY",
+              },
+            }),
+            // Econt / Speedy: next day within Bulgaria
+            transitTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 1, unitCode: "DAY" },
+          },
+        },
+        hasMerchantReturnPolicy: MERCHANT_RETURN_POLICY,
         seller: {
           "@type": "Organization",
           name: companyInfo.legalName,
